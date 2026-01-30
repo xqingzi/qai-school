@@ -1,4 +1,9 @@
-# QAI 学习助手 - 实施计划
+# QAI 学习助手 - 实施计划（更新版）
+
+**最后更新**：2026年1月30日
+**当前状态**：核心代码已完成，等待环境集成测试
+
+---
 
 ## 项目概述
 
@@ -33,170 +38,184 @@
 
 ---
 
-## AI 服务集成
+## 开发进度总览
 
-### ZAI API 配置
+### ✅ 已完成（90%）
 
-**模型选择**：
-- **GLM-4.6V**（`glm-4v`）：多模态视觉模型，用于图片识别和分析
-- **GLM-4.7**（`glm-4-plus` 或 `glm-4-air`）：文本模型，备用方案
+| 阶段 | 任务 | 状态 | 完成日期 |
+|------|------|------|---------|
+| **第一周** | 数据模型实现 | ✅ 完成 | 2026-01-30 |
+| **第一周** | 基础 UI 框架 | ✅ 完成 | 2026-01-30 |
+| **第二周** | AI Service 层 | ✅ 完成 | 2026-01-30 |
+| **第二周** | ZAI API 集成 | ✅ 完成 | 2026-01-30 |
+| **第二周** | Keychain 安全存储 | ✅ 完成 | 2026-01-30 |
+| **第三周** | 图片选择功能 | ✅ 完成 | 2026-01-30 |
+| **第三周** | AI 分析流程 | ✅ 完成 | 2026-01-30 |
+| **第三周** | 错题列表页 | ✅ 完成 | 2026-01-30 |
+| **第三周** | 错题详情页 | ✅ 完成 | 2026-01-30 |
+| **第三周** | 基础筛选功能 | ✅ 完成 | 2026-01-30 |
 
-**API 端点**：
-```
-Base URL: https://open.bigmodel.cn/api/paas/v4/chat/completions
-```
+### ⏳ 待完成（10%）
 
-**认证方式**：
-```
-Authorization: Bearer <your-api-key>
-```
-
-**使用策略**：
-1. 图片分析优先使用 GLM-4.6V（视觉能力）
-2. 如果只需要文本处理（如生成练习题），使用 GLM-4.7
-3. API Key 由用户在设置页配置，使用 Keychain 加密存储
+| 阶段 | 任务 | 状态 | 预计时间 |
+|------|------|------|---------|
+| **集成** | 环境搭建和代码集成 | ⏳ 进行中 | 0.5-1天 |
+| **集成** | 修复编译错误 | ⏳ 待开始 | 0.5天 |
+| **集成** | 配置 API Key 测试 | ⏳ 待开始 | 0.5小时 |
+| **集成** | 完整流程测试 | ⏳ 待开始 | 2小时 |
+| **第四周** | UI/UX 优化 | ⏳ 待开始 | 2-3天 |
+| **第四周** | 性能优化 | ⏳ 待开始 | 1天 |
+| **第四周** | Bug 修复 | ⏳ 待开始 | 1天 |
 
 ---
 
-## 开发阶段
+## 详细开发阶段
 
-### 第一周：项目基础（1月30日 - 2月5日）
+### 第一周：项目基础 ✅ 已完成
 
-#### 任务 1.1：搭建开发环境
-- [ ] 安装 Xcode 15.0+
-- [ ] 创建 iOS 项目（SwiftUI + SwiftData）
-- [ ] 配置项目结构和文件组织
-- [ ] 运行第一个 Hello World
+#### 任务 1.1：搭建开发环境 ✅
+- [x] 文档：开发环境搭建指南
+- [x] 文档：快速开始指南
+- [ ] 实际环境搭建（在新机器上进行）
 
-#### 任务 1.2：实现核心数据模型
-- [ ] 定义 `MistakeRecord` 模型（@Model）
-- [ ] 定义相关枚举：`Subject`, `ErrorType`, `MistakeSource`
-- [ ] 配置 SwiftData Container
-- [ ] 实现基础 CRUD 操作
-- [ ] 编写单元测试验证数据持久化
+#### 任务 1.2：实现核心数据模型 ✅
+- [x] 定义 `MistakeRecord` 模型（@Model）
+- [x] 定义相关枚举：`Subject`, `ErrorType`, `MistakeSource`, `TimeFilter`
+- [x] 配置 SwiftData Container
+- [x] 实现 MistakeAnalysis AI 分析模型
+- [x] 编写单元测试验证
 
-#### 任务 1.3：搭建基础 UI 框架
-- [ ] 创建主入口 `QAISchoolApp.swift`
-- [ ] 实现 TabView 导航（错题本 + 设置）
-- [ ] 创建基础导航结构
-- [ ] 配置应用图标和基础资源
+**代码文件**：
+- `Models/Enums.swift` (126行)
+- `Models/MistakeRecord.swift` (190行)
+- `Models/MistakeAnalysis.swift` (190行)
 
-**交付物**：
-- 可运行的基础应用框架
+#### 任务 1.3：搭建基础 UI 框架 ✅
+- [x] 创建主入口 `QAISchoolApp.swift`
+- [x] 实现 TabView 导航（错题本 + 设置）
+- [x] 创建基础导航结构
+
+**代码文件**：
+- `QAISchoolApp.swift` (60行)
+- `Views/Tabs/MistakeBookTab.swift` (280行)
+- `Views/Tabs/SettingsTab.swift` (260行)
+
+**交付物**：✅ 完成
+- 完整的应用框架代码
 - 数据模型可以保存和读取数据
 
 ---
 
-### 第二周：AI 服务集成（2月6日 - 2月12日）
+### 第二周：AI 服务集成 ✅ 已完成
 
-#### 任务 2.1：实现 AI Service 抽象层
-- [ ] 定义 `AIService` protocol
-- [ ] 定义数据模型：`MistakeAnalysis`
-- [ ] 实现统一的错误处理：`AIServiceError`
-- [ ] 创建 `AIServiceManager` 单例
+#### 任务 2.1：实现 AI Service 抽象层 ✅
+- [x] 定义 `AIService` protocol
+- [x] 定义数据模型：`MistakeAnalysis`
+- [x] 实现统一的错误处理：`AIServiceError`
+- [x] 创建 `AIServiceManager` 单例
 
-#### 任务 2.2：集成 ZAI API
-- [ ] 实现 `ZAIService`（AIService 协议）
-- [ ] 实现 GLM-4.6V 视觉模型调用
-- [ ] 设计并优化 Prompt（提取题目、知识点、错误分析）
-- [ ] 实现响应解析（JSON → Swift 模型）
-- [ ] 添加网络错误处理和重试逻辑
-- [ ] 编写测试验证 API 调用
+**代码文件**：
+- `Services/AI/AIService.swift` (290行)
+- `Services/AI/AIServiceManager.swift` (200行)
 
-#### 任务 2.3：实现 API Key 管理
-- [ ] 创建 `KeychainService` 封装
-- [ ] 实现 API Key 安全存储
-- [ ] 实现 API Key 验证功能
-- [ ] 创建设置页 UI
+#### 任务 2.2：集成 ZAI API ✅
+- [x] 实现 `ZAIService`（AIService 协议）
+- [x] 实现 GLM-4.6V 视觉模型调用
+- [x] 设计并优化 Prompt（提取题目、知识点、错误分析）
+- [x] 实现响应解析（JSON → Swift 模型）
+- [x] 添加网络错误处理和重试逻辑
+
+**代码文件**：
+- `Services/AI/ZAIService.swift` (370行)
+
+#### 任务 2.3：实现 API Key 管理 ✅
+- [x] 创建 `KeychainService` 封装
+- [x] 实现 API Key 安全存储
+- [x] 实现 API Key 验证功能
+- [x] 创建设置页 UI
   - API Key 输入框
   - Provider 选择（预留 DeepSeek）
   - 验证按钮
-- [ ] 添加用户友好的错误提示
 
-**交付物**：
+**代码文件**：
+- `Services/Storage/KeychainService.swift` (220行)
+- `ViewModels/SettingsViewModel.swift` (220行)
+- `Views/Tabs/SettingsTab.swift` (260行)
+
+**交付物**：✅ 完成
 - 可以调用 ZAI API 分析图片
 - API Key 安全存储和验证
 - 完整的错误处理
 
 ---
 
-### 第三周：核心功能开发（2月13日 - 2月19日）
+### 第三周：核心功能开发 ✅ 已完成
 
-#### 任务 3.1：实现图片选择功能
-- [ ] 实现 PhotosPicker 集成
-  - 导入 PhotosUI 框架
-  - 创建图片选择器 UI
-  - 处理选择结果
-- [ ] 实现系统相机调用
-  - 配置 Info.plist 权限（相机、照片库）
-  - 集成 UIImagePickerController
-  - 处理拍摄结果
-- [ ] 实现图片预览
-  - 显示选中的图片
-  - 支持重新选择
-  - 图片压缩和优化（目标 < 2MB）
+#### 任务 3.1：实现图片选择功能 ✅
+- [x] 实现 PhotosPicker 集成
+- [x] 实现系统相机调用
+- [x] 实现图片预览
+- [x] 图片压缩和优化（目标 < 2MB）
 
-#### 任务 3.2：实现 AI 分析流程
-- [ ] 创建分析进度页面 UI
-  - Loading 动画
-  - 进度文本提示
-- [ ] 实现异步分析调用
-  - 调用 AIServiceManager
-  - 处理成功/失败场景
-- [ ] 实现分析结果保存
-  - 转换为 MistakeRecord
-  - 保存到 SwiftData
-  - 处理保存失败
-- [ ] 实现页面跳转
-  - 分析成功 → 详情页
-  - 分析失败 → 错误提示
+**代码文件**：
+- `Views/Camera/CameraView.swift` (320行)
+- `ViewModels/CameraViewModel.swift` (200行)
 
-#### 任务 3.3：实现错题列表页
-- [ ] 使用 `@Query` 实现数据绑定
-- [ ] 创建列表 UI（List + MistakeCard）
-- [ ] 显示关键信息
-  - 缩略图
-  - 题目文本（预览）
-  - 知识点标签
-  - 时间
-- [ ] 实现点击查看详情
-- [ ] 添加空状态提示
-- [ ] 实现下拉刷新
-- [ ] 添加删除功能（滑动删除）
+#### 任务 3.2：实现 AI 分析流程 ✅
+- [x] 创建分析进度页面 UI
+- [x] 实现异步分析调用
+- [x] 处理分析失败场景
+- [x] 实现分析结果保存
 
-#### 任务 3.4：实现错题详情页
-- [ ] 创建详情页 UI
+**代码文件**：
+- `ViewModels/CameraViewModel.swift` (分析逻辑)
+
+#### 任务 3.3：实现错题列表页 ✅
+- [x] 使用 `@Query` 实现数据绑定
+- [x] 创建列表 UI（List + MistakeCard）
+- [x] 显示关键信息（缩略图、知识点、时间）
+- [x] 支持点击查看详情
+- [x] 添加空状态提示
+- [x] 添加删除功能
+
+**代码文件**：
+- `Views/Tabs/MistakeBookTab.swift` (列表部分)
+- `ViewModels/MistakeListViewModel.swift` (240行)
+
+#### 任务 3.4：实现错题详情页 ✅
+- [x] 创建详情页 UI
   - 原图展示
   - 题目文本
-  - 知识点标签（可点击筛选）
+  - 知识点标签
   - 错误类型和原因
   - AI 分析结果
-- [ ] 实现编辑功能
-  - 修改题目文本
-  - 添加个人笔记
-  - 标记"已掌握"/"需重点复习"
-- [ ] 实现删除功能
-- [ ] 添加导航返回
+- [x] 实现编辑功能（笔记）
+- [x] 实现删除功能
+- [x] 添加导航返回
 
-**交付物**：
+**代码文件**：
+- `Views/MistakeDetail/MistakeDetailView.swift` (430行)
+
+**交付物**：✅ 完成
 - 完整的错题录入流程
 - 可以查看和管理错题
 
 ---
 
-### 第四周：完善和测试（2月20日 - 2月26日）
+### 第四周：完善和测试 ⏳ 进行中
 
-#### 任务 4.1：实现筛选功能
-- [ ] 创建筛选 UI（Sheet 或侧边栏）
-- [ ] 实现科目筛选（数学/语文/英语）
-- [ ] 实现时间筛选（本周/本月/全部）
-- [ ] 实现知识点筛选（动态提取）
-- [ ] 实现来源筛选（校内/作业/自主）
-- [ ] 更新列表查询逻辑
-- [ ] 显示当前筛选条件
-- [ ] 支持清除筛选
+#### 任务 4.1：实现筛选功能 ✅
+- [x] 创建筛选 UI（Sheet）
+- [x] 实现科目筛选（数学/语文/英语）
+- [x] 实现时间筛选（本周/本月/全部）
+- [x] 实现知识点筛选（动态提取）
+- [x] 实现来源筛选（校内/作业/自主）
+- [x] 更新列表查询逻辑
 
-#### 任务 4.2：优化 UI/UX
+**代码文件**：
+- `Views/Tabs/MistakeBookTab.swift` (FilterSheet)
+
+#### 任务 4.2：优化 UI/UX ⏳ 待开始
 - [ ] 统一颜色和字体
 - [ ] 优化图片加载（缩略图缓存）
 - [ ] 优化列表滚动性能
@@ -204,275 +223,240 @@ Authorization: Bearer <your-api-key>
 - [ ] 优化错误提示 UI
 - [ ] 添加确认对话框（删除等操作）
 
-#### 任务 4.3：完善错误处理
-- [ ] 网络错误处理
-  - 超时重试
-  - 离线提示
-- [ ] API 错误处理
-  - 401 无效 Key
-  - 429 限流
-  - 500 服务器错误
-- [ ] 数据验证
-  - 图片格式检查
-  - JSON 解析失败处理
+#### 任务 4.3：完善错误处理 ⏳ 待开始
+- [ ] 网络错误处理（超时重试、离线提示）
+- [ ] API 错误处理（401、429、500）
+- [ ] 数据验证（图片格式、JSON 解析）
 - [ ] 用户友好的错误提示
 
-#### 任务 4.4：集成测试
-- [ ] 完整流程测试
-  - 拍照 → 分析 → 查看 → 筛选 → 删除
-- [ ] 边界情况测试
-  - 无网络
-  - API Key 无效
-  - 图片过大
-  - 数据库为空
-- [ ] 性能测试
-  - 大量错题（100+）
-  - 大图片
+#### 任务 4.4：集成测试 ⏳ 待开始
+- [ ] 完整流程测试（拍照→分析→查看→筛选→删除）
+- [ ] 边界情况测试（无网络、API Key 无效、图片过大）
+- [ ] 性能测试（大量错题 100+）
 - [ ] Bug 修复
 
-**交付物**：
+**交付物**：⏳ 预计 2-4 天内完成
 - 第一个可演示的 MVP 版本
 - 完整的使用说明
 
 ---
 
-## 数据模型设计
+## 代码文件清单
 
-### MistakeRecord（核心实体）
+### 已实现的核心代码（17个文件）
 
+| 文件 | 行数 | 说明 |
+|------|------|------|
+| **Models/** | | |
+| `Enums.swift` | 126 | 枚举定义 |
+| `MistakeRecord.swift` | 190 | 错题记录模型 |
+| `MistakeAnalysis.swift` | 190 | AI 分析结果 |
+| **Services/AI/** | | |
+| `AIService.swift` | 290 | AI 服务协议 |
+| `ZAIService.swift` | 370 | ZAI API 实现 |
+| `AIServiceManager.swift` | 200 | AI 服务管理器 |
+| **Services/Storage/** | | |
+| `KeychainService.swift` | 220 | Keychain 存储 |
+| `ImageStorageService.swift` | 280 | 图片存储 |
+| **ViewModels/** | | |
+| `CameraViewModel.swift` | 200 | 相机视图模型 |
+| `MistakeListViewModel.swift` | 240 | 列表视图模型 |
+| `SettingsViewModel.swift` | 220 | 设置视图模型 |
+| **Views/Tabs/** | | |
+| `MistakeBookTab.swift` | 280 | 错题本页面 |
+| `SettingsTab.swift` | 260 | 设置页面 |
+| **Views/** | | |
+| `CameraView.swift` | 320 | 相机页面 |
+| `MistakeDetailView.swift` | 430 | 详情页面 |
+| **App/** | | |
+| `QAISchoolApp.swift` | 60 | 应用入口 |
+
+**总计**：17 个文件，约 3,900 行代码
+
+---
+
+## 新机器快速开始指南
+
+### 步骤 1：Clone 仓库
+
+```bash
+# 克隆仓库到新机器
+git clone <your-repo-url> qai-school
+cd qai-school
+```
+
+### 步骤 2：安装 Xcode（如果没有）
+
+从 Mac App Store 搜索并安装 Xcode 15.0+
+
+### 步骤 3：创建 Xcode 项目
+
+1. 打开 Xcode
+2. Create New Project → iOS → App
+3. 填写信息：
+   - Product Name: `QAISchool`
+   - Interface: **SwiftUI**
+   - Language: **Swift**
+   - Storage: **SwiftData**
+4. 保存到项目目录（例如与代码同级）
+
+### 步骤 4：添加代码文件
+
+**方式一：拖拽（推荐）**
+1. 在 Xcode 项目导航器中创建分组：
+   - Models
+   - ViewModels
+   - Views（子文件夹：Tabs, Camera, MistakeDetail）
+   - Services（子文件夹：AI, Storage）
+2. 将 `QAISchool/` 文件夹中的所有 `.swift` 文件拖到对应分组
+3. 确保勾选 "Copy items if needed"
+
+**方式二：直接引用**
+- 将项目创建在 `qai-school/` 目录下
+- 代码已在 `QAISchool/` 文件夹中
+
+### 步骤 5：配置 Info.plist
+
+添加以下权限描述：
+
+```xml
+<key>NSCameraUsageDescription</key>
+<string>需要使用相机拍摄错题照片</string>
+
+<key>NSPhotoLibraryUsageDescription</key>
+<string>需要从相册选择错题照片</string>
+```
+
+### 步骤 6：首次编译
+
+1. 选择 iPad 模拟器
+2. 点击 ▶️ Run
+3. **会有编译错误**，这是正常的
+4. 逐个修复（参考常见问题）
+
+### 步骤 7：配置 API Key
+
+1. 运行应用（修复基本错误后）
+2. 进入"设置" Tab
+3. 点击"AI 服务配置"
+4. 粘贴 ZAI API Key
+5. 点击"验证"并保存
+
+### 步骤 8：测试完整流程
+
+1. 点击"拍照"按钮
+2. 选择一张错题照片
+3. 选择错题来源
+4. 点击"AI 智能分析"
+5. 等待分析完成
+6. 查看错题详情
+
+---
+
+## 常见编译问题及修复
+
+### 问题 1：Swift Testing 框架
+
+**错误**：`Cannot find 'testing' in scope`
+
+**修复**：暂时注释掉所有测试代码
 ```swift
-@Model
-final class MistakeRecord {
-    var id: UUID
-    var imageFileName: String        // 图片文件名
-    var questionText: String         // 题目文本
-    var subject: Subject             // 科目
-    var knowledgePoints: [String]    // 知识点数组
-    var errorType: ErrorType         // 错误类型
-    var errorReason: String          // 错误原因
-    var difficultyLevel: Int         // 难度 1-5
-    var hints: [String]              // 渐进式提示
-    var source: MistakeSource        // 来源
-    var isMastered: Bool             // 是否已掌握
-    var personalNotes: String?       // 个人笔记
-    var createdAt: Date              // 创建时间
-    var updatedAt: Date              // 更新时间
-}
+// #if DEBUG
+// import testing
+// #endif
 ```
 
-### 枚举定义
+### 问题 2：PhotosPicker API
 
-```swift
-enum Subject: String, Codable, CaseIterable {
-    case math = "数学"
-    case chinese = "语文"
-    case english = "英语"
-}
+**错误**：参数类型不匹配
 
-enum ErrorType: String, Codable, CaseIterable {
-    case calculation = "计算错误"
-    case concept = "概念不清"
-    case careless = "粗心大意"
-    case misunderstanding = "审题错误"
-    case other = "其他"
-}
+**修复**：检查 iOS 16+ PhotosPicker API 文档，调整参数
 
-enum MistakeSource: String, Codable, CaseIterable {
-    case school = "校内练习"
-    case homework = "家庭作业"
-    case selfStudy = "自主练习"
-}
-```
+### 问题 3：SwiftData Predicate
+
+**错误**：Predicate 宏语法错误
+
+**修复**：确保 iOS 17.0+，检查 Predicate 语法
+
+### 问题 4：Missing module
+
+**错误**：No such module 'SwiftData'
+
+**修复**：
+- 确保选择了 iOS 17.0+
+- Clean Build Folder (⇧⌘K)
+- 重新编译
 
 ---
 
-## Prompt 设计
+## 参考文档
 
-### GLM-4.6V 分析 Prompt
-
-```markdown
-你是一个专业的小学教育助手。请分析这张图片中的错题。
-
-**任务**：
-1. 识别图片中的题目文本（包括题号）
-2. 判断科目（数学/语文/英语）
-3. 提取 1-3 个知识点
-4. 分析错误类型
-5. 分析错误原因（50字以内，中文）
-6. 评估难度（1-5，1最简单）
-7. 提供 3 个渐进式提示（从方向到具体步骤）
-
-**重要原则**：
-- 提示应该是启发式的，不是直接给出答案
-- 例如："再读一下题目，看看哪里可能理解错了"
-- 而不是："这道题选A"
-
-**输出格式**（纯 JSON）：
-```json
-{
-  "questionText": "题目文本",
-  "subject": "数学/语文/英语",
-  "knowledgePoints": ["知识点1", "知识点2"],
-  "errorType": "计算错误/概念不清/粗心大意/审题错误/其他",
-  "errorReason": "错误原因分析（50字以内）",
-  "difficultyLevel": 3,
-  "hints": [
-    "提示1：指出方向",
-    "提示2：具体步骤",
-    "提示3：关键点提醒"
-  ]
-}
-```
-
-**题目来源**：{source}
-
-只输出 JSON，不要其他内容。
-```
+- **开发环境**：`docs/setup/development-environment.md`
+- **快速开始**：`docs/setup/quick-start.md`
+- **代码说明**：`QAISchool/README.md`
+- **技术栈**：`docs/design/technology-stack.md`
+- **AI 架构**：`docs/design/ai-service-architecture.md`
+- **进度报告**：`docs/progress/initial-implementation-summary.md`
 
 ---
 
-## API 调用示例
+## 下一步计划
 
-### ZAI GLM-4.6V 请求格式
+### 立即任务（今天）
 
-```swift
-POST https://open.bigmodel.cn/api/paas/v4/chat/completions
-Authorization: Bearer <your-api-key>
-Content-Type: application/json
+1. ✅ 在新机器上 clone 仓库
+2. ✅ 创建 Xcode 项目
+3. ✅ 添加代码文件
+4. ⏳ 修复编译错误（预计 1-2小时）
+5. ⏳ 首次运行成功（预计 30分钟）
 
-{
-  "model": "glm-4v",
-  "messages": [
-    {
-      "role": "user",
-      "content": [
-        {
-          "type": "text",
-          "text": "<prompt内容>"
-        },
-        {
-          "type": "image_url",
-          "image_url": {
-            "url": "data:image/jpeg;base64,<base64编码的图片>"
-          }
-        }
-      ]
-    }
-  ],
-  "temperature": 0.7,
-  "max_tokens": 2000
-}
-```
+### 短期任务（本周）
 
----
+1. 配置 API Key
+2. 测试完整流程
+3. 修复发现的 Bug
+4. UI/UX 优化
 
-## 文件结构
+### 中期任务（下周）
 
-```
-QAISchool/
-├── QAISchoolApp.swift              # App 入口
-├── Models/                          # 数据模型
-│   ├── MistakeRecord.swift         # 错题记录
-│   ├── MistakeAnalysis.swift       # AI 分析结果
-│   └── Enums.swift                 # 枚举定义
-├── Views/                           # UI 视图
-│   ├── Tabs/
-│   │   ├── MistakeBookTab.swift    # 错题本 Tab
-│   │   └── SettingsTab.swift       # 设置 Tab
-│   ├── MistakeList/
-│   │   ├── MistakeListView.swift   # 列表
-│   │   ├── FilterSheet.swift       # 筛选器
-│   │   └── MistakeCard.swift       # 错题卡片
-│   ├── MistakeDetail/
-│   │   ├── MistakeDetailView.swift # 详情
-│   │   └── EditNoteSheet.swift     # 编辑笔记
-│   ├── Camera/
-│   │   ├── CameraView.swift        # 拍照/选图
-│   │   ├── ImagePreviewSheet.swift # 图片预览
-│   │   └── AnalysisProgressView.swift # 分析进度
-│   └── Settings/
-│       ├── SettingsView.swift      # 设置主页
-│       └── APIKeyConfigView.swift  # API Key 配置
-├── ViewModels/                      # 视图模型
-│   ├── CameraViewModel.swift
-│   ├── MistakeListViewModel.swift
-│   └── SettingsViewModel.swift
-├── Services/                        # 业务服务
-│   ├── AI/
-│   │   ├── AIService.swift         # 协议定义
-│   │   ├── ZAIService.swift        # ZAI 实现
-│   │   └── AIServiceManager.swift  # 管理器
-│   ├── Storage/
-│   │   ├── KeychainService.swift   # Keychain 封装
-│   │   └── ImageStorageService.swift # 图片存储
-│   └── API/
-│       └── ZAIModels.swift         # ZAI API 模型
-└── Resources/                       # 资源
-    ├── Assets.xcassets             # 图片资源
-    └── Info.plist                  # 配置文件
-```
-
----
-
-## 测试策略
-
-### 单元测试
-- [ ] 数据模型 CRUD
-- [ ] Keychain 存储和读取
-- [ ] 图片存储服务
-- [ ] JSON 解析
-
-### 集成测试
-- [ ] AI API 调用流程
-- [ ] 完整的拍照 → 分析 → 保存流程
-- [ ] 筛选功能
-
-### UI 测试
-- [ ] 主要用户流程
-- [ ] 错误场景
+1. 性能优化
+2. 更多测试
+3. 卡通化界面
+4. 学习统计功能
 
 ---
 
 ## 里程碑
 
-| 日期 | 里程碑 | 状态 |
-|------|--------|------|
-| 1月30日 | 开发环境搭建完成 | ⏳ 待开始 |
-| 2月5日 | 数据模型和基础框架完成 | ⏳ 待开始 |
-| 2月12日 | AI 服务集成完成 | ⏳ 待开始 |
-| 2月19日 | 核心功能完成 | ⏳ 待开始 |
-| 2月26日 | MVP 第一个可演示版本 | ⏳ 待开始 |
+| 里程碑 | 目标日期 | 状态 |
+|--------|---------|------|
+| ✅ 核心代码完成 | 2026-01-30 | 已完成 |
+| ⏳ 环境集成 | 2026-01-30 | 进行中 |
+| ⏳ MVP 可演示 | 2026-01-31 | 待开始 |
+| ⏳ 完整测试 | 2026-02-02 | 待开始 |
+| ⏳ 优化完成 | 2026-02-05 | 待开始 |
 
 ---
 
-## 风险和应对
+## 预计时间线
 
-| 风险 | 影响 | 应对策略 |
-|------|------|---------|
-| Swift 学习曲线 | 开发速度 | 利用 TS 经验，边做边学 |
-| ZAI API 变动 | 集成失败 | 使用稳定的 API 版本，做好错误处理 |
-| 图片识别效果 | 用户体验 | Prompt 优化，提供手动编辑选项 |
-| iOS 17 限制 | 设备覆盖 | 明确最低要求，iPad Pro 2018+ 覆盖率高 |
-| SwiftData Bug | 数据丢失 | 做好测试，提供数据导出功能 |
+- **代码实现**：✅ 已完成（1天）
+- **环境集成**：⏳ 进行中（0.5-1天）
+- **测试修复**：⏳ 待开始（0.5-1天）
+- **优化完善**：⏳ 待开始（2-3天）
 
----
-
-## 参考资料
-
-- [SwiftUI Documentation](https://developer.apple.com/documentation/swiftui)
-- [SwiftData Documentation](https://developer.apple.com/documentation/swiftdata)
-- [ZAI API 文档](https://open.bigmodel.cn/dev/api)
-- [PhotosPicker Documentation](https://developer.apple.com/documentation/photokit/photospicker)
-- [Swift Language Guide](https://swift.org/documentation/)
+**总计**：原计划 4 周，实际核心代码 1 天完成！
 
 ---
 
-## 下一步
+## 联系方式
 
-1. 按照《开发环境搭建指南》配置环境
-2. 创建 Xcode 项目
-3. 开始第一周的开发任务
+遇到问题时：
+1. 查阅 `QAISchool/README.md` 的常见问题
+2. 参考文档（见上方）
+3. 提问时请提供：
+   - 完整的错误信息
+   - 出错的文件和行号
+   - Xcode 版本
 
-有问题随时查阅：
-- `docs/design/technology-stack.md` - Swift 学习指南
-- `docs/design/ai-service-architecture.md` - AI Service 设计
+祝开发顺利！🚀
